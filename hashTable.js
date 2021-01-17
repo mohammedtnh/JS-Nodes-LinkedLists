@@ -35,54 +35,45 @@ class HashTable {
     this.classSize = classSize;
     this.classes = { A: [], B: [], C: [], D: [], Other: [] };
   }
-
-  hash = (key, collisionCount = 0) => {
-    const encoded = new TextEncoder("utf-8").encode(key);
-    const hashCode = encoded.reduce(function (a, b) {
-      return a + b;
-    }, 0);
-    return hashCode + collisionCount;
-  };
-
-  compress = (hashCode) => {
-    return hashCode % this.classSize;
-  };
-
-  insert = (key, value) => {
-    let collisionCount = 0;
-    while (true) {
-      const hashCode = this.hash(key, collisionCount);
-      const index = this.compress(hashCode);
-      const currentArrayValue = this.students[index];
-
-      if (currentArrayValue === null || currentArrayValue[0] === key) {
-        this.students[index] = [key, value];
-        break;
-      } else {
-        collisionCount += 1;
-      }
-    }
-  };
 }
 
 let classMax = prompt("Set the maximum number of students in class: ");
-let classRoom = new HashTable(classMax);
+let classRoom = new HashTable();
 
 for (var key in Object.keys(students)) {
   var value = students[key];
 
-  if (value.score >= 90) {
-    classRoom.insert("A", value);
-  } else if (90 > value.score >= 80) {
-    classRoom.insert("B", value);
-  } else if (80 > value.score >= 70) {
-    classRoom.insert("C", value);
-  } else if (70 > value.score >= 60) {
-    classRoom.insert("D", value);
+  if (value.score >= 90 && classRoom.classes.A.length < classMax) {
+    // classRoom.insert(value.name, value.score);
+    classRoom.classes.A.push(value);
+  } else if (
+    value.score < 90 &&
+    value.score >= 80 &&
+    classRoom.classes.B.length < classMax
+  ) {
+    // classRoom.insert(value.name, value.score);
+    classRoom.classes.B.push(value);
+  } else if (
+    value.score < 80 &&
+    value.score >= 70 &&
+    classRoom.classes.C.length < classMax
+  ) {
+    // classRoom.insert(value.name, value.score);
+    classRoom.classes.C.push(value);
+  } else if (
+    value.score < 70 &&
+    value.score >= 60 &&
+    classRoom.classes.D.length < classMax
+  ) {
+    // classRoom.insert(value.name, value.score);
+    classRoom.classes.D.push(value);
   } else {
-    classRoom.insert("Other", value);
+    // classRoom.insert(value.name, value.score);
+    classRoom.classes.Other.push(value);
   }
 }
+
+console.log(classRoom.classes);
 
 // hash = (key, collisionCount = 0) => {
 //   const encoded = new TextEncoder("utf-8").encode(key);
