@@ -41,6 +41,7 @@ class Queue {
         this.addNode(12);
         peopleNum -= 12;
       }
+      this.addNode(peopleNum);
     }
   };
 
@@ -63,3 +64,11 @@ class Queue {
 }
 
 const disney = new Queue(5);
+console.log("Waiting time is ", disney.peek() * 2);
+disney.enqueue(6);
+disney.enqueue(4);
+disney.enqueue(12);
+disney.enqueue(2);
+console.log("Waiting time is ", disney.peek() * 2);
+disney.enqueue();
+console.log("Waiting time is ", disney.peek() * 2);
