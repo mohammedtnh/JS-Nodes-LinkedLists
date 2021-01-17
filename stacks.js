@@ -63,7 +63,8 @@ console.log(
 
 for (let i = 0; i < player1.limit; i++) {
   let card = deck.pop();
-  console.log(`${i + 1}- ${player1.push(card)}`);
+  player1.push(card);
+  console.log(`${i + 1}- ${card}`);
 }
 
 console.log(
@@ -72,7 +73,8 @@ console.log(
 
 for (let i = 0; i < player2.limit; i++) {
   let card = deck.pop();
-  console.log(`${i + 1}- ${player2.push(card)}`);
+  player2.push(card);
+  console.log(`${i + 1}- ${card}`);
 }
 
 console.log(
