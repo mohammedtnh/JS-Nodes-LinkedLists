@@ -17,53 +17,49 @@ class TreeNode {
     }
   };
 
-  removeChild = (node) => {
-    this.children = this.children.filter((child) => child !== node);
+  getChildWithName = (name) => {
+    return this.children.find((child) => child.name === name);
   };
 
-  traverse = (path) => {
-    let nodes = [this];
-    let current = nodes.pop();
+  //   removeChild = (node) => {
+  //     this.children = this.children.filter((child) => child !== node);
+  //   };
 
-    path.forEach((string) => {
-      if (current.name === string) {
-        console.log(`inside: ${current.name}`);
-        return current.name;
-      }
-      // else {
-      //   console.log(`string ${string}`);
-      //   return false;
-      // }
-    });
-    //   nodes = [...nodes, ...current.children];
+  traverse = () => {
+    let nodes = [this];
+    while (nodes.length > 0) {
+      let current = nodes.pop();
+      console.log(current.name);
+      nodes = [...nodes, ...current.children];
+    }
   };
 }
 
 const root = new TreeNode("family");
-let exit = false;
+let fullName = prompt("enter child full name (done if finished): ");
 
-do {
-  userInput = prompt("enter child full name (done if finished): ");
-  let path = userInput.split(" ");
+while (fullName !== "done") {
+  let current = root;
 
-  if (path[path.length - 1] === root.name) {
-    root.addChild(path[0]);
-  } else {
-    console.log("parent does not exist");
+  let names = fullName.split(" ").reverse();
+  let firstName = names.pop();
+  let lastName = names.shift();
+
+  if (lastName === current.name) {
+    if (names) {
+      for (let name of names) {
+        let child = current.getChildWithName(name);
+        if (child) {
+          current = child;
+        } else {
+          console.log("parent does not exist");
+        }
+      }
+    }
+    let newNode = new TreeNode(firstName);
+    current.addChild(newNode);
   }
-  console.log(root.children);
-} while (userInput !== "done");
 
-// if (root.traverse(userInput)) {
-//   console.log(`added a child to ${parent}`);
-// }
-
-// const child1 = new TreeNode("Naser");
-// const child2 = new TreeNode("Taher");
-// const child3 = new TreeNode("Ebrahim");
-
-// root.addChild(child1);
-// root.addChild(child2);
-// child2.addChild(child3);
-// root.removeChild(child1);
-// root.traverse();
+  console.log("--------------------------------------------------");
+  fullName = prompt("enter child full name (done if finished): ");
+}
