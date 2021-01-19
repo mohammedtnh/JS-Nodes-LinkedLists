@@ -4,13 +4,13 @@ const numbers = [
   [4, 2, [6, 7, [2, 6, 1]]],
 ];
 
-sum = (numbers) => {
+const rSum = (numbers) => {
   let sum = 0;
   numbers.forEach((number) => {
-    if (Array.isArray(number)) {
-      sum(number);
-    }
+    if (typeof number === "number") sum += number;
+    else sum += rSum(number);
   });
+  return sum;
 };
 
-console.log(`The sum is ${sum(numbers)}`);
+console.log(`The sum is ${rSum(numbers)}`);
